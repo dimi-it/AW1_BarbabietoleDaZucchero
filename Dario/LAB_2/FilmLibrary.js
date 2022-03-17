@@ -26,14 +26,14 @@ exports.insertFilm = (film) => {
         const sql = 'INSERT INTO films(id, title, favorite, watchdate, rating) VALUES( ?, ?, ?, DATE(?), ?)';
         db.run(sql, [film.id, film.title, film.favorite, film.watchdate, film.rating], (err) => {
             if (err) reject(err); 
-            else resolve('Done');
+            else resolve('Done inserted film '+film.title);
         });
     }) ;
 }
 
 exports.getAllFilms = () => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM films';
+        const sql = `SELECT * FROM films`;
         db.all(sql, [], (err, rows) => {
           if (err) {
             reject(err);
@@ -108,6 +108,21 @@ exports.getFilmsByTitle = (title) =>
 {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT * FROM films WHERE title = ?';
+        db.all(sql, [title], (err, rows) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          const films = rows.map((f) => new Film(f.id, f.title, f.favorite, f.watchdate, f.rating));
+          resolve(films);
+        });
+      });
+}
+
+exports.getFilmsContainingTitle = (title) =>
+{
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM films WHERE title LIKE '%' || ? || '%'`;
         db.all(sql, [title], (err, rows) => {
           if (err) {
             reject(err);
