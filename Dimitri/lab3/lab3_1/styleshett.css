@@ -1,0 +1,15 @@
+.my-star{
+    color:rgb(255, 235, 21)
+}
+
+.my-blue{
+    color:rgb(41, 128, 242)
+}
+
+.my-header-link :link, :visited{
+    color: white;
+}
+
+.my-header-link :hover{
+    color: rgba(255, 255, 255, 0.66);
+}
