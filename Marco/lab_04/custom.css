@@ -1,0 +1,65 @@
+/* 
+ * [2021/2022]
+ * 01UDFOV Applicazioni Web I / 01TXYOV Web Applications I
+ * Lab 4
+ */
+
+/* Global */
+.vheight-100 {
+    min-height: 100vh;
+}
+
+.navbar-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.below-nav {
+    padding-top: 5rem;
+}
+
+/* Filters and projects */
+.list-group-item {
+    background-color: transparent;
+}
+
+.list-group-item.active {
+    background-color: #055c9d;
+    border-color: #055c9d;
+}
+
+.list-group-item-action:hover {
+    background-color: #0e86d4;
+    color: white;
+}
+
+small.watch-date {
+    text-align: right;
+}
+
+p.title {
+    display: inline ;
+    margin-left: 1rem;
+}
+
+
+/* Class for favorite movies */
+.favorite {
+    color: red;
+}
+
+/* Class for empty stars */
+.empty-star:hover {
+    fill: #0e86d4;
+    color: #055c9d;
+}
+
+/* Add task button */
+.fixed-right-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+    margin: 0 1.5rem 1.5rem 0;
+    border-radius: 50%;
+}
