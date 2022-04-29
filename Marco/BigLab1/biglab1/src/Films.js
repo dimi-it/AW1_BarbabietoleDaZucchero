@@ -1,9 +1,18 @@
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useState } from 'react';
+import dayjs from 'dayjs';
 
 const starEmpty = <i class="bi bi-star"></i>
 const starFilled = <i class="bi bi-star-fill"></i> 
+
+const filmsTest = [
+  // Data Strucutre: id, title, favorite, watchDate, rating
+  {id: 1, title: "Pulp Fiction", favorite: true, watchDate: dayjs('2022-04-10'), rating: 5},
+  {id: 2, title: "21 Grams", favorite: true, watchDate: dayjs('2022-03-17'), rating: 4},
+  {id: 3, title: "Star Wars", favorite: false},
+  {id: 4, title: "Matrix", favorite: true},
+  {id: 5, title: "Shrek", favorite: false, watchDate: dayjs('2022-04-21'), rating: 3}
+];
 
 function FilmList(props) {
 
@@ -12,14 +21,8 @@ function FilmList(props) {
     );
   }
 
-  function FilmTable(props) {
-    const [films, setFilms] = useState(props.films);
 
-    function deleteFilm(id) {
-      // setFilms(...)   // remove exam
-      setFilms( films.filter( (f)=> f.id !== id ) );
-    }
-  
+  function FilmTable(props) {
     return (
       <>
       <Table>
@@ -34,7 +37,7 @@ function FilmList(props) {
         </thead>
         <tbody>
           {
-            films.map((f) => <FilmRow film={f} key={f.id} deleteFilm={deleteFilm} />)
+            props.films.map((f) => <FilmRow film={f} />)
           }
         </tbody>
       </Table>
@@ -87,3 +90,4 @@ function FilmList(props) {
   
 
   export { FilmList };
+  export { filmsTest };
