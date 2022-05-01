@@ -14,6 +14,29 @@ const filmsTest = [
   {id: 5, title: "Shrek", favorite: false, watchDate: dayjs('2022-04-21'), rating: 3}
 ];
 
+const applyFilter = (films_tofilter, id_filter) =>
+{
+  console.log("Filtro: ", id_filter);
+    switch(id_filter)
+    {
+      case 'All': 
+        return films_tofilter;
+      case 'Favorite': 
+        return films_tofilter.filter((f)=> f.favorite );
+      case 'Best rating': 
+        return films_tofilter.filter((f) => f.rating === 5);
+      case 'Watched last month':
+        let f1 = films_tofilter.filter((f) => f.watchDate);
+        return f1.filter((f) => {const diff = f.watchDate.diff(dayjs(),'month');
+          const ret = diff <= 0 && diff > -1;
+          return ret;});
+      case 'Unseen': 
+        return films_tofilter.filter((f)=> !f.watchDate );
+      default: return films_tofilter;
+      
+    }
+}
+
 function FilmList(props) {
 
     return (
@@ -91,3 +114,4 @@ function FilmList(props) {
 
   export { FilmList };
   export { filmsTest };
+  export { applyFilter };

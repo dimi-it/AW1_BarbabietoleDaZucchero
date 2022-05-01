@@ -4,32 +4,19 @@ import { NavBarTop } from './Nav';
 import './style.css'
 import { Container, Row, Col } from 'react-bootstrap';
 import { SidebarLeft } from './Sidebar';
-import dayjs from 'dayjs';
 import { FilmList } from './Films';
 import { filmsTest } from './Films';
 import { useState } from 'react';
+import { applyFilter } from './Films';
 
 function App() {
 
   const [films, setFilms] = useState(filmsTest);
+  const [selectedFilter, setFiltertoShow] = useState('All');
 
-  function deleteFilm(id) {
-    if (id === 'favorites') {
-      setFilms( filmsTest.filter((f)=> f.favorite ));
-    }
-    else if(id === 'rated'){
-      setFilms( filmsTest.filter((f)=> f.rating === 5 ));
-    }
-    else if(id === 'seenLastMonth'){ 
-      let f1 = filmsTest.filter((f) => f.watchDate);
-      setFilms( f1.filter((f) => {const diff = f.watchDate.diff(dayjs(),'month');
-                                  const ret = diff <= 0 && diff > -1;
-                                  return ret;}));
-    }
-    else if(id === 'unseen'){
-      setFilms( filmsTest.filter((f)=> !f.watchDate ));
-    }
-  }
+  const changeFilter = (fltName) => {
+    setFiltertoShow(fltName);
+  };
   
   return(
     <>
@@ -38,7 +25,7 @@ function App() {
    <div class="container-fluid">
       <div class="row vheight-100">
         <aside class="collapse d-md-block col-md-3 col-12 bg-light below-nav" id="left-sidebar">
-          <SidebarLeft deleteFilm={deleteFilm} setFilms={setFilms} filmsTest={filmsTest}></SidebarLeft>
+          <SidebarLeft changeFilter={changeFilter}></SidebarLeft>
         </aside>
 
         {/*<!-- Main content -->*/}
@@ -51,7 +38,7 @@ function App() {
             </Row>
             <Row>
               <Col>
-                <FilmList films={films}></FilmList>
+                <FilmList films={applyFilter(films, selectedFilter)}></FilmList>
               </Col>
             </Row>
           </Container>
