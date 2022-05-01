@@ -1,0 +1,3 @@
+- cambiare colore all left sidebar in modo che il filtro selezionato diventi blu scuro
+- i film preferiti devono diventare scritte di colore rosso
+- 

@@ -12,6 +12,17 @@ import { applyFilter } from './Films';
 function App() {
 
   const [films, setFilms] = useState(filmsTest);
+
+  function deleteFilm(id) {
+    setFilms( films.filter( (f)=> f.id !== id ) );
+  }
+
+  function changeFavourite(id) {
+    let index = films.findIndex(f => (f.id === id));
+    films[index].favorite = !(films[index].favorite);
+    setFilms( films.filter(() => {return true}) );
+  }
+
   const [selectedFilter, setFiltertoShow] = useState('All');
 
   const changeFilter = (fltName) => {
@@ -38,7 +49,7 @@ function App() {
             </Row>
             <Row>
               <Col>
-                <FilmList films={applyFilter(films, selectedFilter)}></FilmList>
+                <FilmList films={applyFilter(films, selectedFilter)} deleteFilm={deleteFilm} changeFavourite={changeFavourite}></FilmList>
               </Col>
             </Row>
           </Container>

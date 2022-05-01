@@ -1,4 +1,4 @@
-import { Table } from 'react-bootstrap';
+import { Table, Button} from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import dayjs from 'dayjs';
 
@@ -16,7 +16,6 @@ const filmsTest = [
 
 const applyFilter = (films_tofilter, id_filter) =>
 {
-  console.log("Filtro: ", id_filter);
     switch(id_filter)
     {
       case 'All': 
@@ -40,7 +39,7 @@ const applyFilter = (films_tofilter, id_filter) =>
 function FilmList(props) {
 
     return (
-      <FilmTable films={props.films}></FilmTable>
+      <FilmTable films={props.films} deleteFilm={props.deleteFilm} changeFavourite={props.changeFavourite}></FilmTable>
     );
   }
 
@@ -60,7 +59,7 @@ function FilmList(props) {
         </thead>
         <tbody>
           {
-            props.films.map((f) => <FilmRow film={f} />)
+            props.films.map((f) => <FilmRow film={f} deleteFilm={props.deleteFilm} changeFavourite={props.changeFavourite}/>)
           }
         </tbody>
       </Table>
@@ -70,8 +69,14 @@ function FilmList(props) {
   
   function FilmRow(props) {
     return (
-      <tr><FilmData film={props.film} />{/*<ExamActions code={props.exam.code} deleteExam={props.deleteExam} />*/}</tr>
+      <tr><FilmData film={props.film} changeFavourite={props.changeFavourite} /><FilmDelete id={props.film.id} deleteFilm={props.deleteFilm}/></tr>
     );
+  }
+
+  function FilmDelete(props) {
+    return <td><Button variant='danger'
+      onClick={() => { props.deleteFilm(props.id) }}
+    ><i className='bi bi-trash3'></i></Button></td>
   }
   
   function FilmData(props) {
@@ -95,7 +100,9 @@ function FilmList(props) {
     <input
     name="presente"
     type="checkbox"
-    checked={props.film.favorite}/>;
+    onChange={() => { props.changeFavourite(props.film.id) }}
+    checked={props.film.favorite}
+    />;
 
     let wDate = props.film.watchDate ? props.film.watchDate.format('YYYY-MM-DD') : '';
 
